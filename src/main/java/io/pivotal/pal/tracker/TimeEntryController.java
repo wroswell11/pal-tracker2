@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/time-entries")
 public class TimeEntryController {
 
     private TimeEntryRepository timeEntryRepository;
@@ -15,31 +16,27 @@ public class TimeEntryController {
         this.timeEntryRepository = timeEntryRepository;
     }
 
-
-    /* ------------------------------------------------------------------------------------------------------------ */
-    @DeleteMapping(path = "/time-entries/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable long id) {
         timeEntryRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
 
     }
-    /* ------------------------------------------------------------------------------------------------------------ */
 
-
-    @PostMapping(path = "/time-entries")
+    @PostMapping
     public ResponseEntity create(@RequestBody TimeEntry timeEntryToCreate) {
         TimeEntry entry = timeEntryRepository.create(timeEntryToCreate);
         return new ResponseEntity(entry, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "/time-entries")
+    @GetMapping
     public ResponseEntity<List<TimeEntry>> list() {
         List<TimeEntry> list = timeEntryRepository.list();
 
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping(path = "/time-entries/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TimeEntry> read(@PathVariable long id) {
         TimeEntry entry = timeEntryRepository.find(id);
 
@@ -50,7 +47,7 @@ public class TimeEntryController {
         }
     }
 
-    @PutMapping(path = "/time-entries/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable long id, @RequestBody TimeEntry timeEntry) {
         TimeEntry entry = timeEntryRepository.update(id, timeEntry);
 
