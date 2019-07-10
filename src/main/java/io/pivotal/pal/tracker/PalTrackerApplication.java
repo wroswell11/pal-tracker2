@@ -15,7 +15,6 @@ public class PalTrackerApplication {
 
     @Bean
     @ConditionalOnClass(DataSource.class)
-    @ConditionalOnProperty()
     public TimeEntryRepository jdbcRepository(DataSource datasource){
         return new JdbcTimeEntryRepository(datasource);
     }
